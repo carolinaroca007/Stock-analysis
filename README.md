@@ -8,5 +8,5 @@ Steve, our Finance graduate, noticed that stock: DQ's yearly returns were negati
 
 The results from the data collected in years 2017 and 2018 are significantly different. In 2017, eleven of the twelve stocks saw positive returns compared to 2018 where only two stocks experienced positive returns.
 
-![2017 stock volume and return](VBA_Challenge_2017.PNG)
+![2017 stock volume and return](C:\Users\17867\Desktop\Northwestern\Module 2\Resources\VBA_Challenge_2017.PNG)
 
