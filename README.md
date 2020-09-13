@@ -16,13 +16,46 @@ The results from the data collected in years 2017 and 2018 are significantly dif
 
 ### Stocks: Execution Times
 
-Prior to refactoring the subroutine allStocksAnalysis to be more efficient, the script execution time to get all stocks' volumes and returns for 2017 and 2018 were 0.75 and 0.73 second, respectively. I refactored the code by removing the nested loop that would have otherwised run my conditional 11 times and ran the code from A2 to the last row for each ticker. The refactored subroutine now only runs the tickerIndex 
-
+Prior to refactoring the subroutine allStocksAnalysis to be more efficient, the script execution time to get all stocks' volumes and returns for 2017 and 2018 were 0.75 and 0.73 second, respectively. I refactored the code by removing the nested loop that would have otherwised run my conditional 11 times and ran the code from A2 to the last row for each ticker. The refactored subroutine now only runs the tickerIndex until the next row changes tickerIndex.
 
 ![2017 Script Execution](https://github.com/carolinaroca007/Stock-analysis/blob/master/Resources/VBA_Challenge_2017.png)
 
 ![2018 Script Execution](https://github.com/carolinaroca007/Stock-analysis/blob/master/Resources/VBA_Challenge_2018.png)
 
+    For j = 0 To 11
+    
+        tickerVolumes(j) = 0
+      
+    Next j
+    
+    For i = 2 To RowCount
+    
+        If Cells(i, 1).Value = tickers(tickerIndex) Then
+            tickerVolumes(tickerIndex) = tickerVolumes(tickerIndex) + Cells(i, 8).Value
+        End If
+
+        If Cells(i - 1, 1).Value <> tickers(tickerIndex) And Cells(i, 1).Value = tickers(tickerIndex) Then
+            tickerStartingPrices(tickerIndex) = Cells(i, 6).Value
+        End If
+
+        If Cells(i + 1, 1).Value <> tickers(tickerIndex) And Cells(i, 1).Value = tickers(tickerIndex) Then
+            tickerEndingPrices(tickerIndex) = Cells(i, 6).Value
+            '3d Increase the tickerIndex.
+            tickerIndex = tickerIndex + 1
+        End If
+    
+    Next i
+
+    Worksheets("All Stocks Analysis").Activate
+    
+    For c = 0 To 11
+    
+        Cells(4 + c, 1).Value = tickers(c)
+        Cells(4 + c, 2).Value = tickerVolumes(c)
+        Cells(4 + c, 3).Value = tickerEndingPrices(c) / tickerStartingPrices(c) - 1
+
+    Next c
+
 ## Summary
 
-In summary, 
+In summary, the advantages to refactoring code is the you make memory by making your code more efficient, requires less lines of code, easier to read and maintain. The disadvantages to refactoring code is knowing where to make the changes so that the script runs correctly and produces an accurate output, knowing where to begin, and how much time it will take the refactor the code. The advantages and disadvantages apply to the original file because we were able to reduce script execution from .75 seconds to .15 second and from .73 seconds to .14 seconds by reducing code complexity. Conversely, it took a few hours to create the new lines of code and check that the results were accurate.
